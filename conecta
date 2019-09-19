@@ -1,0 +1,257 @@
+#include <stdio.h>
+
+int main (){
+	/*Variables:
+	 * Son todas las variables usadas en el transcurso del programa
+	 * */
+	
+	//Variables
+	int mov, contFila=0,contColum=0, i=0;
+	char tablero[6][7];
+	char columna[]={'1','2','3','4','5','6','7','\0'};
+	char nombre1[20];
+	char nombre2[20];
+	char verFila ='O';
+	int ex_ganador=0;
+	
+
+	
+	/*Seccion de Bienvenida
+	 * En esta parte se les pide a cada jugador que ingrese sus nombres, ya que estos se utilizaran como identificadores
+	 * en cada turno.
+	 * */
+
+
+	printf("\n\n\t\t  Bienvenidos a Conecta 4 ICE\n\n");
+
+	printf("Jugador 1, Ingrese su nombre:\n");
+	scanf("%s",nombre1);
+	printf("\n%s su ficha es 'R'\nBienvenido al juego!!\n\n\n",nombre1);
+
+	printf("Jugador 2, Ingrese su nombre:\n");
+	scanf("%s",nombre2);
+	printf("\n%s su ficha es 'A'\nBienvenido al juego!!\n\n\n", nombre2);
+	printf("Jugadores:\n%s  y %s en cada turno deben indicar la columna en la cual quieran poner sus fichas. \n", nombre1, nombre2);
+	printf("El jugador que tengas 4 de sus fichas alineadas de manera consecutiva vertical, horizontal o diagonalmente gana el juego\n");
+	printf("\n\tQue el mejor gane!!!\n\n");
+	
+	/*Inicializacion del tablero:
+	 * La matriz tablero[6][7] es llenada con 'O' de principio a fin.
+	 * 
+	 * Mostrar Tablero:
+	 * Es la funcion que imprime la matriz[6][7] por pantalla
+	 * */
+
+	//Incializacion de tablero
+	for (int i=0; i<6; i++){
+		for(int j=0; j<7; j++){
+			tablero[i][j]='O';
+		}
+	}
+
+
+	//Mostrar Tablero
+	printf("\n\n\t\t\t'Tablero Conecta 4'\n\n");
+	//Indicadores de columna
+	for(int i=0; i<8;i++){
+		printf("\t %c ",columna[i]);
+	}
+	//Tablero
+	for (int i=0; i<6; i++){
+		printf("\n");
+		if(i<6){
+			printf("\n\t-----------------------------------------------------\n");
+		}
+		for (int j=0; j<7; j++){
+			if(j<7){
+			printf(" \t| %c |", tablero[i][j]);
+				}
+		}
+	}
+	printf("\n\t-----------------------------------------------------\n");
+
+    for(int turno=0;ex_ganador=1;turno++){
+    if(turno%2==0){
+		
+	/*Turnos: existen dos jugadores: Jugador 1 y Jugador 2, estos son identificados por los nombres de usuarios entregado al principio
+	 * del programa.
+	 * 
+	 * Se dividide en tres partes:
+	 * 1. Al jugador correspondiente se le pide que ingrese la columna donde pondra su ficha, esta posicion se guardara en la variable mov
+	 * 2. Recorrer columna (mov-1): 
+	 * 		mov-1 : corresponde a la posicion real de la columna en la matriz
+	 * 		Cada ficha se llenara de la posicion (5-i)
+	 * 		i : representa la variable con la cual se recorre la fila
+	 * 3. Revisar: Si 4 fichas se escuentran una al lado de otra de manera consecutiva, el programa se detendra e indicara el ganador el 
+	 * 		programa.
+	 * */
+		
+	//Jugador 1
+	bool entrar =true;
+	while (entrar){
+		printf("\n%s ingresa columna donde pondras tu ficha:\n", nombre1);
+		scanf("%d",&mov);
+	while( (mov<0) || (mov>7) ){
+		printf("Ingresa movimiento valido:\n");
+		scanf("%d",&mov);
+	}
+	//Recorrer columna (mov-1)
+	contFila =0;
+	i=0;
+	while(contFila==0){
+	if (tablero[5-i][mov-1]==verFila && i==0){
+		tablero[5-i][mov-1]='R';
+		entrar=false;
+		break;
+		}
+	else if( (tablero[5-i][mov-1]==verFila) && (i<=5)){
+				tablero[5-i][mov-1]='R';
+				entrar=false;
+				break;
+				}
+	else if(i>5){
+			printf("Jugada invalida\n");
+			contFila ++;}
+	 
+			i++;
+		}
+	}
+
+
+	/*Revisar: Encargado de verificar si existe ganador, es decir, 4 fichas alineadas de manera horizontal, vertical o diagonalmente.
+	 * Al encontrar un ganador el juego se detiene e indica el jugador que ha ganado la partida.
+	 * */
+	 
+	//Revisar
+	//Vertical
+	contFila=0;
+	for(int i=0; i<6; i++){
+		if( tablero[i][mov-1]=='R' ){
+			contFila ++;
+			if(contFila ==4){
+				printf("Jugador %s usted es ganador\n", nombre1);
+				}
+			}else {
+			  contFila = 0;
+			 }
+	}
+	
+	//Horizontal 
+	contColum=0;
+	for(int i=0; i<6; i++){
+		for(int j=0; j<7; j++){
+			if (tablero[i][j]=='R'){
+				contColum ++;
+				if( contColum ==4){
+					printf("Jugador %s, usted es ganador\n", nombre1);
+				}
+			} else {
+				contColum = 0;
+			}
+		}
+	}
+
+	
+	//Mostrar Tablero
+	printf("\n\n\t\t\t'Tablero Conecta 4'\n\n");
+	//Indicadores de columna
+	for(int i=0; i<8;i++){
+		printf("\t %c ",columna[i]);
+	}
+	//Tablero
+	for (int i=0; i<6; i++){
+		printf("\n");
+		if(i<6){
+			printf("\n\t-----------------------------------------------------\n");
+		}
+		for (int j=0; j<7; j++){
+			if(j<7){
+			printf(" \t| %c |", tablero[i][j]);
+				}
+		}
+	}
+	printf("\n\t-----------------------------------------------------\n");}
+	else{
+	//Jugador 2
+	bool entrar=true;
+	while (entrar){
+		printf("\n%s ingresa columna donde pondras tu ficha:\n", nombre2);
+		scanf("%d",&mov);
+	while( (mov<0) || (mov>7) ){
+		printf("Ingresa movimiento valido:\n");
+		scanf("%d",&mov);
+	}
+	//Recorrer columna (mov-1)
+	contFila =0;
+	i=0;
+	while(contFila==0){
+	if (tablero[5-i][mov-1]==verFila && i==0){
+		tablero[5-i][mov-1]='A';
+		entrar=false;
+		break;}
+	else if( (tablero[5-i][mov-1]==verFila) && (i<=5)){
+				tablero[5-i][mov-1]='A';
+				entrar=false;
+				break;
+				}
+	else if(i>5){
+			printf("Jugada invalida\n");
+			contFila ++;}
+	 
+	i++;
+		}
+	}
+
+
+	//Revisar
+	//Vertical
+	contFila=0;
+	for(int i=0; i<6; i++){
+		if( tablero[i][mov-1]=='A' ){
+			contFila ++;
+			if(contFila ==4){
+				printf("Jugador %s, usted es ganador\n", nombre2);
+				}
+			}else {
+			  contFila =0;
+			 }
+	}
+
+	//Horizontal 
+	contColum=0;
+	for(int i=0; i<6; i++){
+		for(int j=0; j<7; j++){
+			if (tablero[i][j]=='A'){
+				contColum ++;
+				if( contColum ==4){
+					printf("Jugador %s, usted es ganador\n", nombre2);
+				}
+			} else {
+				contColum = 0;
+			}
+		}
+	}
+
+
+	//Mostrar Tablero
+	printf("\n\n\t\t\t'Tablero Conecta 4'\n\n");
+	//Indicadores de columna
+	for(int i=0; i<8;i++){
+		printf("\t %c ",columna[i]);
+	}
+	//Tablero
+	for (int i=0; i<6; i++){
+		printf("\n");
+		if(i<6){
+			printf("\n\t-----------------------------------------------------\n");
+		}
+		for (int j=0; j<7; j++){
+			if(j<7){
+			printf(" \t| %c |", tablero[i][j]);
+				}
+		}
+	}
+	printf("\n\t-----------------------------------------------------\n");}	
+}
+return 0;}
+		
